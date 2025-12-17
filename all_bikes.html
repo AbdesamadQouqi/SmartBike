@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Bikes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Montserrat+Alternates:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="logo_smartbike_sans_fond.png">
+    <style>
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #E7E9E8;
+            font-family: 'Montserrat', sans-serif;
+            color: #40453f;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(214, 221, 215, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backup-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #40453f;
+            font-weight: 500;
+            font-size: 15px;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #6b7e77;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #6b7e77;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.is-active {
+            font-weight: bold;
+            color: #6b7e77;
+            position: relative;
+        }
+
+        .nav-links a.is-active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #6b7e77;
+        }
+
+        /* Section Hero */
+        .hero-section {
+            width: 100%;
+            height: 88vh;
+            position: relative;
+            overflow: hidden;
+            margin-top: 70px;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) contrast(1.1);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(53, 59, 54, 0.7);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: rgb(237, 243, 238);
+            z-index: 2;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .hero-title {
+            color: rgb(207, 217, 207);
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-size: 4.7rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-description {
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            line-height: 1.4;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Styles des boutons */
+        button {
+            --primary-color: #F7FAF9;
+            --secondary-color: #7D837A;
+            --hover-color: #b8c4b8;
+            --arrow-width: 10px;
+            --arrow-stroke: 2px;
+            border: 0;
+            border-radius: 20px;
+            color: var(--secondary-color);
+            padding: 12px 24px;
+            background: var(--primary-color);
+            display: flex;
+            transition: 0.2s background;
+            align-items: center;
+            gap: 0.6em;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        button .arrow-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button .arrow {
+            margin-top: 1px;
+            width: var(--arrow-width);
+            background: var(--primary-color);
+            height: var(--arrow-stroke);
+            position: relative;
+            transition: 0.2s;
+        }
+
+        button .arrow::before {
+            content: "";
+            position: absolute;
+            border: solid var(--secondary-color);
+            border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+            top: -3px;
+            right: 3px;
+            transition: 0.2s;
+            padding: 3px;
+            transform: rotate(-45deg);
+        }
+
+        button:hover {
+            background-color: var(--hover-color);
+        }
+
+        button:hover .arrow {
+            background: var(--secondary-color);
+        }
+
+        button:hover .arrow:before {
+            right: 0;
+        }
+
+        /* Section des vélos */
+        .bikes-section {
+            padding: 80px 5%;
+            background-color: #E7E9E8;
+        }
+
+        .bikes-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Cartes de vélos */
+        .bike-card {
+            background: #f7faf9;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 60px;
+            display: flex;
+            height: 400px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .bike-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .bike-card.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .bike-content {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bike-name {
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #40453f;
+            margin-bottom: 15px;
+        }
+
+        .bike-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #6b7e77;
+            margin-bottom: 20px;
+        }
+
+        .bike-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #5a615b;
+            margin-bottom: 30px;
+        }
+
+        .bike-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .order-btn, .info-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .order-btn {
+            background: #6b7e77;
+            color: white;
+        }
+
+        .order-btn:hover {
+            background: #5a6d66;
+            transform: translateY(-2px);
+        }
+
+        .info-btn {
+            background: transparent;
+            color: #6b7e77;
+            border: 2px solid #6b7e77;
+        }
+
+        .info-btn:hover {
+            background: #6b7e77;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .bike-image-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slider-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .slider-image.active {
+            opacity: 1;
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 5;
+        }
+
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: white;
+            border: solid 1px rgb(102, 109, 102);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background: rgb(102, 109, 102);
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            width: auto; /* Ajuste la largeur à la taille de la flèche */
+            height: auto; /* Ajuste la hauteur à la taille de la flèche */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            font-size: 18px;
+            color: #40453f;
+        }
+
+        .slider-arrow.prev {
+            left: 15px;
+        }
+
+        .slider-arrow.next {
+            right: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background: #d6ddd7;
+            padding: 25px 5% 15px;
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-main {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 170px;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-logo {
+            height: 35px;
+            width: auto;
+            margin-bottom: 15px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background-color: #6b7e77;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-2px);
+            background-color: #5a6d66;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+            justify-content: end;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #40453f;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 4px 0;
+            width: fit-content;
+        }
+
+        .footer-links a:hover {
+            color: #6b7e77;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #6b7e77;
+            transition: width 0.3s ease;
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-links a.is-active {
+            font-weight: bold;
+            color: #6b7e77;
+            position: relative;
+        }
+
+        .footer-links a.is-active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #6b7e77;
+        }
+
+        .footer-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #616a60;
+        }
+
+        .contact-info, .opening-hours {
+            line-height: 1.5;
+            font-size: 13px;
+        }
+
+        .contact-info p, .opening-hours p {
+            margin-bottom: 4px;
+            color: #5a615b;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            color: #5a615b;
+            font-size: 12px;
+        }
+
+        /* Styles pour le coeur favori */
+.bike-favorite {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+
+        .favorite-icon {
+            transition: all 0.3s ease;
+            transform: scale(1);
+        }
+
+        .favorite-icon.active {
+            fill: #ff4757;
+            stroke: #ff4757;
+            transform: scale(1.2);
+            animation: heartbeat 0.5s ease-in-out;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1.1); }
+            75% { transform: scale(1.3); }
+            100% { transform: scale(1.2); }
+        }
+
+        .bike-image-container {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .footer-main {
+                gap: 60px;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-description {
+                font-size: 1.3rem;
+            }
+            
+            .bike-card {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .bike-card.reverse {
+                flex-direction: column;
+            }
+            
+            .bike-image-container {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+            
+            .footer-main {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                text-align: center;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .footer-brand {
+                align-items: center;
+            }
+            
+            .footer-section {
+                align-items: center;
+            }
+            
+            .footer-links {
+                align-items: center;
+            }
+            
+            .footer-logo {
+                height: 50px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-description {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            button {
+                width: 200px;
+            }
+            
+            .bikes-section {
+                padding: 60px 5%;
+            }
+            
+            .bike-content {
+                padding: 30px;
+            }
+            
+            .bike-name {
+                font-size: 1.8rem;
+            }
+            
+            .bike-price {
+                font-size: 1.5rem;
+            }
+            
+            .bike-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            header {
+                padding: 12px 4%;
+            }
+            
+            footer {
+                padding: 20px 4% 12px;
+            }
+            
+            .footer-logo {
+                height: 45px;
+            }
+            
+            .social-icon {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .footer-title {
+                font-size: 14px;
+            }
+            
+            .footer-links a {
+                font-size: 13px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .hero-section {
+                height: 70vh;
+            }
+            
+            .bikes-section {
+                padding: 50px 4%;
+            }
+            
+            .bike-content {
+                padding: 25px;
+            }
+            
+            .bike-name {
+                font-size: 1.6rem;
+            }
+            
+            .bike-price {
+                font-size: 1.3rem;
+            }
+            
+            .bike-description {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <img src="logo_smartbike_sans_fond.png" alt="Smartbike Logo" class="logo" onclick="redirectWithLoader('home_essential.html')" style="cursor: pointer;">
+        <nav class="nav-links">
+        <a href="#" onclick="redirectWithLoader('home_essential.html')">Home</a>
+        <a href="#" onclick="redirectWithLoader('all_bikes.html')" class="is-active">Bikes</a>
+        <a href="#" onclick="redirectWithLoader('contact.html')">Contact</a>
+        <a href="#" onclick="redirectWithLoader('login_signin.html')">LogIn/SignIn</a>
+        </nav>
+    </header>
+
+    <!-- Contenu principal -->
+    <main>
+        <!-- Section Hero -->
+        <section class="hero-section">
+            <div class="video-container">
+                <video class="hero-video" autoplay muted loop playsinline>
+                    <source src="video_veloyourfuture.mp4" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                </video>
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title">Look for your future</h1>
+                <p class="hero-description">and you'll find it</p>
+                <div class="hero-buttons">
+                    <button onclick="scrollToBike5()">
+                        Here
+                        <div class="arrow-wrapper">
+                            <div class="arrow"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section des vélos -->
+<section class="bikes-section">
+    <div class="bikes-container">
+        <!-- Bike5 Card -->
+        <div class="bike-card" id="bike5">
+            <div class="bike-content">
+                <h3 class="bike-name">Bike5</h3>
+                <p class="bike-price">2 999 $</p>
+                <p class="bike-description">
+                    The premium electric bike for your urban travel. With advanced features and cutting-edge technology, 
+                    Bike5 offers an unparalleled riding experience with exceptional range and comfort.
+                </p>
+                <div class="bike-buttons">
+                    <button class="order-btn" onclick="redirectWithLoader('order.html')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        Order
+                    </button>
+                    <button class="info-btn" onclick="redirectWithLoader('bike5_description.html')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        More info
+                    </button>
+                </div>
+            </div>
+            <div class="bike-image-container">
+                <div class="bike-favorite">
+                    <svg class="favorite-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#40453f" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+                <div class="image-slider" id="slider-bike5">
+                    <img src="Model_1_2.jpg" alt="Bike5" class="slider-image active">
+                    <img src="Model_1_1.webp" alt="Bike5" class="slider-image">
+                    <img src="Model_1_3.webp" alt="Bike5" class="slider-image">
+                    <button class="slider-arrow prev">❮</button>
+                    <button class="slider-arrow next">❯</button>
+                    <div class="slider-nav">
+                        <div class="slider-dot active"></div>
+                        <div class="slider-dot"></div>
+                        <div class="slider-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BikeOne Card -->
+        <div class="bike-card reverse">
+            <div class="bike-content">
+                <h3 class="bike-name">BikeOne</h3>
+                <p class="bike-price">1 499 $</p>
+                <p class="bike-description">
+                    Versatile urban bike perfect for everyday commuting. Designed for comfort and efficiency, 
+                    BikeOne offers a smooth ride with reliable performance for your daily journeys.
+                </p>
+                <div class="bike-buttons">
+                    <button class="order-btn" onclick="redirectWithLoader('order.html')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        Order
+                    </button>
+                    <button class="info-btn" onclick="redirectWithLoader('bikeone_description.html')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        More info
+                    </button>
+                </div>
+            </div>
+            <div class="bike-image-container">
+                <div class="bike-favorite">
+                    <svg class="favorite-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#40453f" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+                <div class="image-slider" id="slider-bikeone">
+                    <img src="Model_2_2.webp" alt="BikeOne" class="slider-image active">
+                    <img src="Model_2_1.webp" alt="BikeOne" class="slider-image">
+                    <img src="Model_2_3.webp" alt="BikeOne" class="slider-image">
+                    <button class="slider-arrow prev">❮</button>
+                    <button class="slider-arrow next">❯</button>
+                    <div class="slider-nav">
+                        <div class="slider-dot active"></div>
+                        <div class="slider-dot"></div>
+                        <div class="slider-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bike22 Card -->
+        <div class="bike-card">
+            <div class="bike-content">
+                <h3 class="bike-name">Bike22</h3>
+                <p class="bike-price">2 199 $</p>
+                <p class="bike-description">
+                    Lightweight and agile for city adventures and long rides. With its innovative design and 
+                    powerful motor, Bike22 delivers exceptional performance in a compact package.
+                </p>
+                <div class="bike-buttons">
+                    <button class="order-btn" onclick="redirectWithLoader('order.html')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        Order
+                    </button>
+                    <button class="info-btn" onclick="redirectWithLoader('bike22_description.html')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        More info
+                    </button>
+                </div>
+            </div>
+            <div class="bike-image-container">
+                <div class="bike-favorite">
+                    <svg class="favorite-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#40453f" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+                <div class="image-slider" id="slider-bike22">
+                    <img src="Model_3_2.webp" alt="Bike22" class="slider-image active">
+                    <img src="Model_3_1.webp" alt="Bike22" class="slider-image">
+                    <img src="Model_3_3.webp" alt="Bike22" class="slider-image">
+                    <button class="slider-arrow prev">❮</button>
+                    <button class="slider-arrow next">❯</button>
+                    <div class="slider-nav">
+                        <div class="slider-dot active"></div>
+                        <div class="slider-dot"></div>
+                        <div class="slider-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BikeFirst Card -->
+        <div class="bike-card reverse">
+            <div class="bike-content">
+                <h3 class="bike-name">BikeFirst</h3>
+                <p class="bike-price">999 $</p>
+                <p class="bike-description">
+                    Entry-level model with essential features for beginners. BikeFirst offers an accessible 
+                    entry into electric biking without compromising on quality or performance.
+                </p>
+                <div class="bike-buttons">
+                    <button class="order-btn" onclick="redirectWithLoader('order.html')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        Order
+                    </button>
+                    <button class="info-btn" onclick="redirectWithLoader('bikefirst_description.html')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        More info
+                    </button>
+                </div>
+            </div>
+            <div class="bike-image-container">
+                <div class="bike-favorite">
+                    <svg class="favorite-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#40453f" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+                <div class="image-slider" id="slider-bikefirst">
+                    <img src="Model_4_2.webp" alt="BikeFirst" class="slider-image active">
+                    <img src="Model_4_1.webp" alt="BikeFirst" class="slider-image">
+                    <img src="Model_4_3.webp" alt="BikeFirst" class="slider-image">
+                    <button class="slider-arrow prev">❮</button>
+                    <button class="slider-arrow next">❯</button>
+                    <div class="slider-nav">
+                        <div class="slider-dot active"></div>
+                        <div class="slider-dot"></div>
+                        <div class="slider-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THE Bike Card -->
+        <div class="bike-card">
+            <div class="bike-content">
+                <h3 class="bike-name">THE Bike</h3>
+                <p class="bike-price">4 499 $</p>
+                <p class="bike-description">
+                    Premium performance for the ultimate riding experience. THE Bike represents the pinnacle 
+                    of electric bike engineering with unmatched power, range, and luxury features.
+                </p>
+                <div class="bike-buttons">
+                    <button class="order-btn" onclick="redirectWithLoader('order.html')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        Order
+                    </button>
+                    <button class="info-btn" onclick="redirectWithLoader('thebike_description.html')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        More info
+                    </button>
+                </div>
+            </div>
+            <div class="bike-image-container">
+                <div class="bike-favorite">
+                    <svg class="favorite-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#40453f" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+                <div class="image-slider" id="slider-thebike">
+                    <img src="Model_5_2.webp" alt="THE Bike" class="slider-image active">
+                    <img src="Model_5_1.webp" alt="THE Bike" class="slider-image">
+                    <img src="Model_5_3.webp" alt="THE Bike" class="slider-image">
+                    <button class="slider-arrow prev">❮</button>
+                    <button class="slider-arrow next">❯</button>
+                    <div class="slider-nav">
+                        <div class="slider-dot active"></div>
+                        <div class="slider-dot"></div>
+                        <div class="slider-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-main">
+            <div class="footer-brand">
+                <img src="logo_smartbike_sans_fond.png" alt="Smartbike Logo" class="footer-logo">
+                <div class="social-icons">
+                    <a href="#" class="social-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.016 10.016 0 01-3.127 1.195 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.937 4.937 0 004.604 3.417 9.868 9.868 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63a9.936 9.936 0 002.46-2.543l-.047-.02z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">Navigation</h3>
+                    <div class="footer-links">
+        <a href="#" onclick="redirectWithLoader('home_essential.html')">Home</a>
+        <a href="#" onclick="redirectWithLoader('all_bikes.html')" class="is-active">Bikes</a>
+        <a href="#" onclick="redirectWithLoader('contact.html')">Contact</a>
+        <a href="#" onclick="redirectWithLoader('login_signin.html')">LogIn/SignIn</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Contact</h3>
+                    <div class="contact-info">
+                        <p>143-145 Bd Maxime Gorki</p>
+                        <p>94800 Villejuif</p>
+                        <p>04 72 00 00 00</p>
+                        <p>contact@smartbike.fr</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Schedules</h3>
+                    <div class="opening-hours">
+                        <p><strong>Mon - Fri:</strong> 9am - 6pm</p>
+                        <p><strong>Saturday:</strong> 10am - 5pm</p>
+                        <p><strong>Sunday:</strong> Closed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SmartBike. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialisation des sliders d'images
+            const sliders = document.querySelectorAll('.image-slider');
+            
+            sliders.forEach(slider => {
+                const images = slider.querySelectorAll('.slider-image');
+                const dots = slider.querySelectorAll('.slider-dot');
+                const prevBtn = slider.querySelector('.slider-arrow.prev');
+                const nextBtn = slider.querySelector('.slider-arrow.next');
+                
+                let currentIndex = 0;
+                
+                function showImage(index) {
+                    // Masquer toutes les images
+                    images.forEach(img => img.classList.remove('active'));
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    
+                    // Afficher l'image et le point correspondants
+                    images[index].classList.add('active');
+                    dots[index].classList.add('active');
+                    
+                    currentIndex = index;
+                }
+                
+                // Événements pour les boutons précédent/suivant
+                prevBtn.addEventListener('click', () => {
+                    let newIndex = currentIndex - 1;
+                    if (newIndex < 0) newIndex = images.length - 1;
+                    showImage(newIndex);
+                });
+                
+                nextBtn.addEventListener('click', () => {
+                    let newIndex = currentIndex + 1;
+                    if (newIndex >= images.length) newIndex = 0;
+                    showImage(newIndex);
+                });
+                
+                // Événements pour les points de navigation
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        showImage(index);
+                    });
+                });
+            });
+        });
+
+        function scrollToBike5() {
+            const bike5 = document.getElementById('bike5');
+            const headerHeight = document.querySelector('header').offsetHeight;
+            const offset = 20; // Ajuste cette valeur si nécessaire
+            
+            const elementPosition = bike5.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerHeight - offset;
+            
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        // Fonctionnalité des favoris
+        document.addEventListener('DOMContentLoaded', function() {
+            const favoriteIcons = document.querySelectorAll('.favorite-icon');
+            
+            favoriteIcons.forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isActive = this.classList.contains('active');
+                    
+                    if (isActive) {
+                        this.classList.remove('active');
+                        this.style.transform = 'scale(1)';
+                    } else {
+                        this.classList.add('active');
+                        this.style.animation = 'none';
+                        setTimeout(() => {
+                            this.style.animation = 'heartbeat 0.5s ease-in-out';
+                        }, 10);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+function redirectWithLoader(page) {
+    // Stocker la page de destination
+    localStorage.setItem('redirectPage', page);
+    // Rediriger vers le loader
+    window.location.href = 'loader.html';
+}
+</script>
+</body>
+</html>

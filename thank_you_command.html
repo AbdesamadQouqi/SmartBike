@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You !</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="logo_smartbike_sans_fond.png">
+    <style>
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #E7E9E8;
+            font-family: 'Montserrat', sans-serif;
+            color: #40453f;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Section de remerciement */
+        .thank-you-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .thank-you-image {
+            max-width: 170px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 30px;
+        }
+
+        .thank-you-text {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #6a7069;
+            font-weight: 500;
+        }
+
+        /* Conteneur des boutons */
+        .button-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Style des boutons */
+        .action-button {
+            --primary-color: #F7FAF9;
+            --secondary-color: #7D837A;
+            --hover-color: #b8c4b8;
+            --arrow-width: 10px;
+            --arrow-stroke: 2px;
+            box-sizing: border-box;
+            border: 0;
+            border-radius: 20px;
+            color: var(--secondary-color);
+            padding: 12px 20px;
+            background: var(--primary-color);
+            display: flex;
+            transition: 0.2s background;
+            align-items: center;
+            gap: 0.6em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+        }
+
+        .action-button .arrow-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .action-button .arrow {
+            margin-top: 1px;
+            width: var(--arrow-width);
+            background: var(--primary-color);
+            height: var(--arrow-stroke);
+            position: relative;
+            transition: 0.2s;
+        }
+
+        .action-button .arrow::before {
+            content: "";
+            box-sizing: border-box;
+            position: absolute;
+            border: solid var(--secondary-color);
+            border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+            display: inline-block;
+            top: -3px;
+            right: 3px;
+            transition: 0.2s;
+            padding: 3px;
+            transform: rotate(-45deg);
+        }
+
+        .action-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .action-button:hover .arrow {
+            background: var(--secondary-color);
+        }
+
+        .action-button:hover .arrow:before {
+            right: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .thank-you-section {
+                padding: 30px 20px;
+            }
+            
+            .thank-you-image {
+                max-width: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .thank-you-section {
+                padding: 20px 15px;
+            }
+            
+            .thank-you-image {
+                max-width: 100px;
+            }
+            
+            .thank-you-text {
+                font-size: 16px;
+            }
+            
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-button {
+                width: 100%;
+                max-width: 200px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="thank-you-section">
+        <!-- Image de confirmation -->
+        <img src="image_livreur.png" alt="Order Confirmation" class="thank-you-image">
+        
+        <!-- Texte de confirmation -->
+        <p class="thank-you-text">
+            You will soon receive a confirmation email and your package will be delivered to you within 24 hours.
+        </p>
+        
+        <!-- Conteneur des boutons -->
+        <div class="button-container">
+            <!-- Bouton Home -->
+<a href="#" class="action-button" onclick="redirectWithLoader('home_essential.html')">
+    Home
+    <div class="arrow-wrapper">
+        <div class="arrow"></div>
+    </div>
+</a>
+
+<!-- Bouton Contact -->
+<a href="#" class="action-button" onclick="redirectWithLoader('all_bikes.html')">
+    All bikes
+    <div class="arrow-wrapper">
+        <div class="arrow"></div>
+    </div>
+</a>
+        </div>
+    </div>
+
+    <script>
+function redirectWithLoader(page) {
+    // Stocker la page de destination
+    localStorage.setItem('redirectPage', page);
+    // Rediriger vers le loader
+    window.location.href = 'loader.html';
+}
+</script>
+</body>
+</html>

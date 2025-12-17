@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Montserrat+Alternates:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="logo_smartbike_sans_fond.png">
+    <style>
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #E7E9E8;
+            font-family: 'Montserrat', sans-serif;
+            color: #40453f;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(214, 221, 215, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #40453f;
+            font-weight: 500;
+            font-size: 15px;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #6b7e77;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #6b7e77;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.is-active {
+            font-weight: bold;
+            color: #6b7e77;
+            position: relative;
+        }
+
+        .nav-links a.is-active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #6b7e77;
+        }
+
+        /* Section Hero */
+        .hero-section {
+            width: 100%;
+            height: 88vh;
+            position: relative;
+            overflow: hidden;
+            margin-top: 70px;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) contrast(1.1);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(53, 59, 54, 0.7);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: rgb(237, 243, 238);
+            z-index: 2;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .hero-title {
+            color: rgb(207, 217, 207);
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-size: 7rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-description {
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            line-height: 1.4;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Styles des boutons */
+        button {
+            --primary-color: #F7FAF9;
+            --secondary-color: #7D837A;
+            --hover-color: #b8c4b8;
+            --arrow-width: 10px;
+            --arrow-stroke: 2px;
+            border: 0;
+            border-radius: 20px;
+            color: var(--secondary-color);
+            padding: 12px 24px;
+            background: var(--primary-color);
+            display: flex;
+            transition: 0.2s background;
+            align-items: center;
+            gap: 0.6em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+        }
+
+        button .arrow-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button .arrow {
+            margin-top: 1px;
+            width: var(--arrow-width);
+            background: var(--primary-color);
+            height: var(--arrow-stroke);
+            position: relative;
+            transition: 0.2s;
+        }
+
+        button .arrow::before {
+            content: "";
+            position: absolute;
+            border: solid var(--secondary-color);
+            border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+            top: -3px;
+            right: 3px;
+            transition: 0.2s;
+            padding: 3px;
+            transform: rotate(-45deg);
+        }
+
+        button:hover {
+            background-color: var(--hover-color);
+        }
+
+        button:hover .arrow {
+            background: var(--secondary-color);
+        }
+
+        button:hover .arrow:before {
+            right: 0;
+        }
+
+        /* Section Who are we */
+        .who-we-are {
+            padding: 80px 5% 70px;
+            background-color: #E7E9E8;
+        }
+
+        .who-we-are-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .who-we-are-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .who-we-are-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .who-we-are-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .who-we-are-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .who-we-are-title {
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #40453f;
+            margin-bottom: 10px;
+        }
+
+        .who-we-are-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #5a615b;
+        }
+
+        /* Features Section */
+        .features-bar {
+            width: 100%;
+            height: 140px;
+            border-radius: 12px;
+            margin: 20px 0 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .features-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .features-icons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 200px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #f7f9f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-icon svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .feature-item:hover .feature-icon {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-label {
+            font-weight: 700;
+            color: #6b7169;
+            font-size: 1.1rem;
+        }
+
+        /* Section Our Models */
+        .our-models {
+            padding: 0 5% 60px;
+            background-color: #E7E9E8;
+        }
+
+        .models-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .models-header {
+            text-align: left;
+            margin-bottom: 50px;
+        }
+
+        .models-title {
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #40453f;
+            margin-bottom: 20px;
+        }
+
+        .models-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #5a615b;
+        }
+
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .model-card {
+            background: #f7faf9;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .model-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .model-favorite {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 2;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .model-favorite:hover {
+            transform: scale(1.1);
+        }
+
+        .favorite-icon {
+            transition: all 0.3s ease;
+            transform: scale(1);
+        }
+
+        .favorite-icon.active {
+            fill: #ff4757;
+            stroke: #ff4757;
+            transform: scale(1.2);
+            animation: heartbeat 0.5s ease-in-out;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1.1); }
+            75% { transform: scale(1.3); }
+            100% { transform: scale(1.2); }
+        }
+
+        .model-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .model-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .model-card:hover .model-image img {
+            transform: scale(1.05);
+        }
+
+        .model-info {
+            padding: 20px;
+        }
+
+        .model-name {
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #40453f;
+            margin-bottom: 8px;
+        }
+
+        .model-description {
+            font-size: 0.9rem;
+            color: #6b7e77;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .model-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #40453f;
+            margin-bottom: 20px;
+        }
+
+        .model-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .order-btn, .info-btn {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .order-btn {
+            background: #6b7e77;
+            color: white;
+        }
+
+        .order-btn:hover {
+            background: #5a6d66;
+            transform: translateY(-2px);
+        }
+
+        .info-btn {
+            background: transparent;
+            color: #6b7e77;
+            border: 2px solid #6b7e77;
+        }
+
+        .info-btn:hover {
+            background: #6b7e77;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Section Where */
+        .where-section {
+            padding: 5px 5%;
+            background-color: #E7E9E8;
+        }
+
+        .where-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .where-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .where-title {
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #40453f;
+            margin-bottom: 20px;
+        }
+
+        .where-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #5a615b;
+            margin: 0 auto 30px;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .where-order-btn {
+            --primary-color: #F7FAF9;
+            --secondary-color: #7D837A;
+            --hover-color: #b8c4b8;
+            border-radius: 20px;
+            color: var(--secondary-color);
+            padding: 12px 18px;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.6em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 0 auto 30px;
+        }
+
+        .map-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px #E7E9E8;
+        }
+
+        /* Section Contact us */
+        .contact-us {
+            padding: 35px 5%;
+            background-color: #E7E9E8;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .contact-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-title {
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #40453f;
+            margin-bottom: 10px;
+        }
+
+        .contact-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #5a615b;
+        }
+
+        .contact-here-btn {
+            --primary-color: #F7FAF9;
+            --secondary-color: #7D837A;
+            --hover-color: #b8c4b8;
+            border-radius: 20px;
+            color: var(--secondary-color);
+            padding: 12px 24px;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.6em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
+            width: fit-content;
+        }
+
+        .contact-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Section Video Banner */
+        .video-banner {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) contrast(1.1);
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(53, 59, 54, 0.6);
+            z-index: 1;
+        }
+
+        .banner-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: rgb(237, 243, 238);
+            z-index: 2;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .banner-text {
+            color: rgb(207, 217, 207);
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+        }
+
+        /* Footer */
+        footer {
+            background: #d6ddd7;
+            padding: 25px 5% 15px;
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-main {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 170px;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-logo {
+            height: 35px;
+            width: auto;
+            margin-bottom: 15px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background-color: #6b7e77;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-2px);
+            background-color: #5a6d66;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+            justify-content: end;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #40453f;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 4px 0;
+            width: fit-content;
+        }
+
+        .footer-links a:hover {
+            color: #6b7e77;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #6b7e77;
+            transition: width 0.3s ease;
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-links a.is-active {
+            font-weight: bold;
+            color: #6b7e77;
+            position: relative;
+        }
+
+        .footer-links a.is-active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #6b7e77;
+        }
+
+        .footer-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #616a60;
+        }
+
+        .contact-info, .opening-hours {
+            line-height: 1.5;
+            font-size: 13px;
+        }
+
+        .contact-info p, .opening-hours p {
+            margin-bottom: 4px;
+            color: #5a615b;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            color: #5a615b;
+            font-size: 12px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .footer-main {
+                gap: 60px;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-description {
+                font-size: 1.3rem;
+            }
+
+            .who-we-are-top {
+                gap: 40px;
+            }
+            
+            .who-we-are-image {
+                height: 350px;
+            }
+            
+            .who-we-are-title {
+                font-size: 2.2rem;
+            }
+
+            .models-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+            
+            .models-title {
+                font-size: 2.2rem;
+            }
+
+            .banner-text {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+            
+            .footer-main {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                text-align: center;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .footer-brand {
+                align-items: center;
+            }
+            
+            .footer-section {
+                align-items: center;
+            }
+            
+            .footer-links {
+                align-items: center;
+            }
+            
+            .footer-logo {
+                height: 50px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-description {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            button {
+                width: 200px;
+            }
+
+            .who-we-are {
+                padding: 60px 5%;
+            }
+            
+            .who-we-are-top {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .who-we-are-image {
+                height: 300px;
+            }
+            
+            .who-we-are-title {
+                font-size: 2rem;
+            }
+            
+            .features-icons {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                justify-items: center;
+            }
+    
+            .feature-item {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .features-bar {
+                height: 60px;
+            }
+
+            .models-header {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            
+            .models-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            
+            .models-title {
+                font-size: 2rem;
+            }
+            
+            .models-description {
+                font-size: 1rem;
+            }
+            
+            .model-image {
+                height: 180px;
+            }
+
+            .where-section {
+                padding: 60px 5%;
+            }
+            
+            .where-title {
+                font-size: 2rem;
+            }
+            
+            .where-description {
+                font-size: 1rem;
+            }
+            
+            .map-container iframe {
+                height: 350px;
+            }
+
+            .contact-us {
+                padding: 60px 5%;
+            }
+            
+            .contact-top {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .contact-image {
+                height: 300px;
+                order: -1;
+            }
+            
+            .contact-title {
+                font-size: 2rem;
+            }
+
+            .video-banner {
+                height: 250px;
+            }
+            
+            .banner-text {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            header {
+                padding: 12px 4%;
+            }
+            
+            footer {
+                padding: 20px 4% 12px;
+            }
+            
+            .footer-logo {
+                height: 45px;
+            }
+            
+            .social-icon {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .footer-title {
+                font-size: 14px;
+            }
+            
+            .footer-links a {
+                font-size: 13px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .hero-section {
+                height: 70vh;
+            }
+
+            .who-we-are {
+                padding: 50px 4%;
+            }
+            
+            .who-we-are-image {
+                height: 250px;
+            }
+            
+            .who-we-are-title {
+                font-size: 1.8rem;
+            }
+            
+            .who-we-are-description {
+                font-size: 1rem;
+            }
+            
+            .feature-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .features-bar {
+                height: 50px;
+                margin-bottom: 30px;
+            }
+
+            .our-models {
+                padding: 20px 4% 50px;
+            }
+            
+            .models-title {
+                font-size: 1.8rem;
+            }
+            
+            .model-name {
+                font-size: 1.2rem;
+            }
+            
+            .model-price {
+                font-size: 1.1rem;
+            }
+            
+            .model-buttons {
+                flex-direction: column;
+            }
+            
+            .order-btn, .info-btn {
+                padding: 12px 15px;
+            }
+
+            .where-section {
+                padding: 50px 4%;
+            }
+            
+            .where-title {
+                font-size: 1.8rem;
+            }
+            
+            .map-container iframe {
+                height: 300px;
+            }
+
+            .contact-us {
+                padding: 50px 4%;
+            }
+            
+            .contact-image {
+                height: 250px;
+            }
+            
+            .contact-title {
+                font-size: 1.8rem;
+            }
+            
+            .contact-description {
+                font-size: 1rem;
+            }
+
+            .video-banner {
+                height: 200px;
+            }
+            
+            .banner-text {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <img src="logo_smartbike_sans_fond.png" alt="Smartbike Logo" class="logo" onclick="redirectWithLoader('home_essential.html')" style="cursor: pointer;">
+        <nav class="nav-links">
+        <a href="#" onclick="redirectWithLoader('home_essential.html')" class="is-active">Home</a>
+        <a href="#" onclick="redirectWithLoader('all_bikes.html')">Bikes</a>
+        <a href="#" onclick="redirectWithLoader('contact.html')">Contact</a>
+        <a href="#" onclick="redirectWithLoader('login_signin.html')">LogIn/SignIn</a>
+        </nav>
+    </header>
+
+    <!-- Contenu principal -->
+    <main>
+        <!-- Section Hero -->
+        <section class="hero-section">
+            <div class="video-container">
+                <video class="hero-video" autoplay muted loop playsinline>
+                    <source src="video_1.mp4" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                </video>
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title">Bike5</h1>
+                <p class="hero-description">The premium electric bike for your urban travel.</p>
+<div class="hero-buttons">
+    <button onclick="redirectWithLoader('bike5_description.html')">
+        More info
+        <div class="arrow-wrapper">
+            <div class="arrow"></div>
+        </div>
+    </button>
+    <button onclick="redirectWithLoader('all_bikes.html')">
+        All bikes
+        <div class="arrow-wrapper">
+            <div class="arrow"></div>
+        </div>
+    </button>
+</div>
+            </div>
+        </section>
+
+        <!-- Section Who are we -->
+        <section class="who-we-are">
+            <div class="who-we-are-container">
+                <div class="who-we-are-top">
+                    <div class="who-we-are-image">
+                        <img src="about-us-image.png" alt="Smartbike team">
+                    </div>
+                    <div class="who-we-are-content">
+                        <h2 class="who-we-are-title">Who are we ?</h2>
+                        <p class="who-we-are-description">
+                            At SmartBike, we believe that sustainable mobility should be both innovative and accessible to everyone.
+                            Founded by a team of passionate EFREI engineers and urban explorers (Abdesamad, Yrvane, Jérémy & Steeve), our mission is to redefine the way people move through cities — combining performance, design, and eco-responsibility.
+                            Each of our electric bikes is designed in France with cutting-edge technology, premium materials, and a focus on comfort and safety. Whether for daily commuting or weekend adventures, SmartBike is more than a product — it's a smarter, greener way of life.
+                        </p>
+                    </div>
+                </div>
+                <div class="features-bar">
+                    <video class="features-video" autoplay muted loop playsinline>
+                        <source src="video_3.mp4" type="video/mp4">
+                        Votre navigateur ne supporte pas la lecture de vidéos.
+                    </video>
+                </div>
+                <div class="features-icons">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6b7e77" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 6v6l4 2"></path>
+                            </svg>
+                        </div>
+                        <span class="feature-label">Autonomy</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6b7e77" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 3v18h18"></path>
+                                <path d="M18 14H8"></path>
+                                <path d="M10 10H8"></path>
+                                <path d="M14 6H8"></path>
+                            </svg>
+                        </div>
+                        <span class="feature-label">Performance</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6b7e77" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                        </div>
+                        <span class="feature-label">Guarantee</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Our Models -->
+        <section class="our-models">
+            <div class="models-container">
+                <div class="models-header">
+                    <h2 class="models-title">Our models</h2>
+                    <p class="models-description">
+                        Discover our range of innovative electric bikes — each designed to fit a unique lifestyle.
+                        From urban commutes to off-road adventures, every SmartBike combines performance, comfort, and modern design to give you the best riding experience.
+                    </p>
+                </div>
+                <div class="models-grid">
+                    <div class="model-card">
+                        <div class="model-favorite">
+                            <svg class="favorite-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#40453f" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </div>
+                        <div class="model-image">
+                            <img src="Model_2_2.webp" alt="BikeOne">
+                        </div>
+                        <div class="model-info">
+                            <h3 class="model-name">BikeOne</h3>
+                            <p class="model-description">Versatile urban bike perfect for everyday.</p>
+                            <p class="model-price">1 499 $</p>
+                            <div class="model-buttons">
+                                <button class="order-btn" onclick="redirectWithLoader('order.html')">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="9" cy="21" r="1"></circle>
+                                        <circle cx="20" cy="21" r="1"></circle>
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                    </svg>
+                                    Order
+                                </button>
+                                <button class="info-btn" onclick="redirectWithLoader('bikeone_description.html')">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                    </svg>
+                                    Info
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="model-card">
+                        <div class="model-favorite">
+                            <svg class="favorite-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#40453f" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </div>
+                        <div class="model-image">
+                            <img src="Model_3_2.webp" alt="Bike22">
+                        </div>
+                        <div class="model-info">
+                            <h3 class="model-name">Bike22</h3>
+                            <p class="model-description">Lightweight and agile for city adventures.</p>
+                            <p class="model-price">2 199 $</p>
+                            <div class="model-buttons">
+                                <button class="order-btn" onclick="redirectWithLoader('order.html')">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="9" cy="21" r="1"></circle>
+                                        <circle cx="20" cy="21" r="1"></circle>
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                    </svg>
+                                    Order
+                                </button>
+                                <button class="info-btn" onclick="redirectWithLoader('bike22_description.html')">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                    </svg>
+                                    Info
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="model-card">
+                        <div class="model-favorite">
+                            <svg class="favorite-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#40453f" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </div>
+                        <div class="model-image">
+                            <img src="Model_5_2.webp" alt="THE Bike">
+                        </div>
+                        <div class="model-info">
+                            <h3 class="model-name">THE Bike</h3>
+                            <p class="model-description">Premium performance for the ultimate riding.</p>
+                            <p class="model-price">4 499 $</p>
+                            <div class="model-buttons">
+                                <button class="order-btn" onclick="redirectWithLoader('order.html')">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="9" cy="21" r="1"></circle>
+                                        <circle cx="20" cy="21" r="1"></circle>
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                    </svg>
+                                    Order
+                                </button>
+                                <button class="info-btn" onclick="redirectWithLoader('thebike_description.html')">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                    </svg>
+                                    Info
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<div style="text-align: center; margin-top: 20px;">
+    <button class="contact-here-btn" onclick="redirectWithLoader('all_bikes.html')">
+        View more
+        <div class="arrow-wrapper">
+            <div class="arrow"></div>
+        </div>
+    </button>
+</div>
+            </div>
+        </section>
+
+        <!-- Section Where -->
+        <section class="where-section">
+            <div class="where-container">
+                <div class="where-header">
+                    <h2 class="where-title">Where ?</h2>
+                    <p class="where-description">
+                        Order your SmartBike directly here on our website in just a few clicks.
+                        Choose your model, fill in the order form, and get ready to enjoy the freedom of electric mobility — it's simple, fast, secure. But if you prefer a more human experience, we would be delighted to welcome you to one of our many stores. 
+                    </p>
+                    <button class="where-order-btn" onclick="redirectWithLoader('order.html')">
+                        Order here
+                        <div class="arrow-wrapper">
+                            <div class="arrow"></div>
+                        </div>
+                    </button>
+                </div>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2627.314520167137!2d2.3666789763674645!3d48.78964810554187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6730074036143%3A0xe183762a18baa175!2sEfrei%20Paris%20Panth%C3%A9on-Asas%20Universit%C3%A9%20-%20Campus%20La%20Factory!5e0!3m2!1sfr!2sfr!4v1759492867569!5m2!1sfr!2sfr" 
+                        width="100%" 
+                        height="520" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Contact us -->
+        <section class="contact-us">
+            <div class="contact-container">
+                <div class="contact-top">
+                    <div class="contact-content">
+                        <h2 class="contact-title">Contact us</h2>
+                        <p class="contact-description">
+                            Have a question, need assistance, or just want to know more about our bikes?
+                            Our team is here to help you! Whether it's for technical advice, order support, or a test ride request, we'll get back to you as soon as possible.
+                        </p>
+                        <button class="contact-here-btn" onclick="redirectWithLoader('contact.html')">
+                            Here
+                            <div class="arrow-wrapper">
+                                <div class="arrow"></div>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="contact-image">
+                        <img src="image_4.jpg" alt="Smartbike customer service">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Video Banner -->
+        <section class="video-banner">
+            <div class="video-banner-container">
+                <video class="banner-video" autoplay muted loop playsinline>
+                    <source src="video_4.mp4" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                </video>
+                <div class="banner-overlay"></div>
+                <div class="banner-content">
+                    <h2 class="banner-text">SmartBike. Simply Smart.</h2>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-main">
+            <div class="footer-brand">
+                <img src="logo_smartbike_sans_fond.png" alt="Smartbike Logo" class="footer-logo">
+                <div class="social-icons">
+                    <a href="#" class="social-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.016 10.016 0 01-3.127 1.195 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.937 4.937 0 004.604 3.417 9.868 9.868 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63a9.936 9.936 0 002.46-2.543l-.047-.02z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">Navigation</h3>
+<div class="footer-links">
+        <a href="#" onclick="redirectWithLoader('home_essential.html')" class="is-active">Home</a>
+        <a href="#" onclick="redirectWithLoader('all_bikes.html')">Bikes</a>
+        <a href="#" onclick="redirectWithLoader('contact.html')">Contact</a>
+        <a href="#" onclick="redirectWithLoader('login_signin.html')">LogIn/SignIn</a>
+</div>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Contact</h3>
+                    <div class="contact-info">
+                        <p>143-145 Bd Maxime Gorki</p>
+                        <p>94800 Villejuif</p>
+                        <p>04 72 00 00 00</p>
+                        <p>contact@smartbike.fr</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Schedules</h3>
+                    <div class="opening-hours">
+                        <p><strong>Mon - Fri:</strong> 9am - 6pm</p>
+                        <p><strong>Saturday:</strong> 10am - 5pm</p>
+                        <p><strong>Sunday:</strong> Closed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SmartBike. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const favoriteIcons = document.querySelectorAll('.favorite-icon');
+            
+            favoriteIcons.forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isActive = this.classList.contains('active');
+                    
+                    if (isActive) {
+                        this.classList.remove('active');
+                        this.style.transform = 'scale(1)';
+                    } else {
+                        this.classList.add('active');
+                        this.style.animation = 'none';
+                        setTimeout(() => {
+                            this.style.animation = 'heartbeat 0.5s ease-in-out';
+                        }, 10);
+                    }
+                });
+            });
+        });
+    </script>
+
+<script>
+function redirectWithLoader(page) {
+    // je stocke la page de destination
+    localStorage.setItem('redirectPage', page);
+    // je redirige vers le loader
+    window.location.href = 'loader.html';
+}
+</script>
+</body>
+</html>
+
